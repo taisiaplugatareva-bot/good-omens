@@ -1,0 +1,409 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Кроули · Благие знамения</title>
+    <!-- Подключаем красивый шрифт для атмосферы -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;600;700&family=Montserrat:wght@300;400;600&display=swap" rel="stylesheet">
+    <!-- Font Awesome для иконок (очень пригодятся) -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background: #0a0c0f;
+            background-image: radial-gradient(circle at 10% 20%, rgba(255, 111, 0, 0.03) 0%, transparent 30%),
+                              linear-gradient(135deg, #0b0e12 0%, #1a1d23 100%);
+            color: #e0e0e0;
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 300;
+            line-height: 1.6;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        /* Контейнер с эффектом старого стекла */
+        .container {
+            max-width: 1100px;
+            width: 100%;
+            background: rgba(15, 20, 25, 0.7);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 111, 0, 0.2);
+            border-radius: 32px;
+            box-shadow: 0 30px 50px rgba(0, 0, 0, 0.8), 0 0 0 1px rgba(200, 80, 0, 0.1) inset;
+            padding: 40px;
+            transition: box-shadow 0.3s ease;
+        }
+
+        .container:hover {
+            box-shadow: 0 30px 60px rgba(230, 100, 0, 0.15), 0 0 0 1px rgba(255, 111, 0, 0.3) inset;
+        }
+
+        /* Шапка с именем и змеиным акцентом */
+        .header {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 40px;
+            border-bottom: 1px dashed #ff6f0066;
+            padding-bottom: 25px;
+        }
+
+        .title-block h1 {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 4rem;
+            font-weight: 700;
+            background: linear-gradient(135deg, #fbd6a2, #ff9f4b);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            letter-spacing: 2px;
+            text-shadow: 0 0 15px #ff6f0033;
+            line-height: 1.1;
+        }
+
+        .title-block .subtitle {
+            font-size: 1.2rem;
+            color: #b0b0b0;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-top: 5px;
+        }
+
+        .title-block .subtitle i {
+            color: #ff6f00;
+            font-size: 1.1rem;
+            opacity: 0.8;
+        }
+
+        .snake-icon {
+            font-size: 4rem;
+            color: #ff6f00;
+            opacity: 0.5;
+            transform: rotate(15deg);
+            transition: opacity 0.3s, transform 0.3s;
+        }
+
+        .snake-icon:hover {
+            opacity: 1;
+            transform: rotate(0deg) scale(1.05);
+        }
+
+        /* Секция с основной информацией */
+        .profile {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 40px;
+            margin-bottom: 50px;
+        }
+
+        .profile-image {
+            flex: 0 0 260px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .sunglasses-frame {
+            width: 220px;
+            height: 220px;
+            border-radius: 50%;
+            background: radial-gradient(circle at 30% 30%, #2b2b2b, #111316);
+            border: 3px solid #ff6f00;
+            box-shadow: 0 0 40px #ff6f0033, inset 0 0 20px #000;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .sunglasses-frame::before {
+            content: "😎";
+            font-size: 100px;
+            filter: drop-shadow(0 0 10px #ff6f00);
+            transform: scaleX(-1);
+        }
+
+        .sunglasses-frame::after {
+            content: "";
+            position: absolute;
+            width: 100%;
+            height: 6px;
+            background: #ff6f00;
+            bottom: 30%;
+            left: 0;
+            box-shadow: 0 0 15px #f90;
+            opacity: 0.6;
+        }
+
+        .snake-coil {
+            width: 100%;
+            height: 8px;
+            background: repeating-linear-gradient(90deg, transparent, transparent 10px, #ff6f00 10px, #ff6f00 20px);
+            opacity: 0.6;
+            margin-top: 10px;
+        }
+
+        /* Характеристики (как в ролевой карточке) */
+        .traits {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            width: 100%;
+        }
+
+        .trait-item {
+            background: rgba(0, 0, 0, 0.35);
+            border-left: 4px solid #ff6f00;
+            padding: 8px 15px;
+            border-radius: 0 12px 12px 0;
+            font-weight: 400;
+            backdrop-filter: blur(4px);
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .trait-item i {
+            color: #ff6f00;
+            width: 24px;
+            font-size: 1.2rem;
+        }
+
+        .trait-item span {
+            color: #dadada;
+        }
+
+        .trait-item strong {
+            color: white;
+            font-weight: 600;
+            margin-left: 5px;
+        }
+
+        /* Биография и описание */
+        .profile-bio {
+            flex: 1;
+            min-width: 300px;
+        }
+
+        .profile-bio h2 {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 2.2rem;
+            font-weight: 600;
+            color: #ffc285;
+            margin-bottom: 20px;
+            border-left: 3px solid #ff6f00;
+            padding-left: 20px;
+        }
+
+        .profile-bio p {
+            margin-bottom: 20px;
+            font-size: 1.05rem;
+            text-align: justify;
+        }
+
+        .quote {
+            font-style: italic;
+            color: #c0c0c0;
+            background: rgba(255, 111, 0, 0.05);
+            padding: 20px;
+            border-radius: 24px;
+            border: 1px solid #ff6f0022;
+            margin-top: 25px;
+            font-size: 1.1rem;
+            position: relative;
+        }
+
+        .quote i {
+            color: #ff6f00;
+            margin-right: 10px;
+        }
+
+        .quote::before {
+            content: "“";
+            font-family: serif;
+            font-size: 5rem;
+            position: absolute;
+            left: 5px;
+            top: -15px;
+            color: #ff6f0011;
+        }
+
+        /* Бентли и детали */
+        .details-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 25px;
+            margin: 50px 0 30px;
+        }
+
+        .detail-card {
+            background: rgba(10, 15, 18, 0.7);
+            border: 1px solid #33373e;
+            border-radius: 24px;
+            padding: 25px 18px;
+            text-align: center;
+            backdrop-filter: blur(5px);
+            transition: 0.2s ease;
+        }
+
+        .detail-card:hover {
+            border-color: #ff6f00;
+            box-shadow: 0 0 25px #ff6f001a;
+            transform: translateY(-4px);
+        }
+
+        .detail-card i {
+            font-size: 2.8rem;
+            color: #ff6f00;
+            margin-bottom: 15px;
+        }
+
+        .detail-card h3 {
+            font-size: 1.5rem;
+            font-family: 'Cormorant Garamond', serif;
+            font-weight: 600;
+            margin-bottom: 8px;
+            color: #ffe6cc;
+        }
+
+        .detail-card p {
+            font-size: 0.95rem;
+            color: #aaa;
+        }
+
+        /* Цитаты/галерея высказываний */
+        .footer-quotes {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin-top: 40px;
+            padding-top: 30px;
+            border-top: 1px solid rgba(255, 111, 0, 0.2);
+        }
+
+        .footer-quotes p {
+            max-width: 700px;
+            text-align: center;
+            font-size: 1rem;
+            color: #8e8e8e;
+            letter-spacing: 0.5px;
+        }
+
+        .footer-quotes p i {
+            color: #ff6f00;
+        }
+
+        .footer-quotes .signature {
+            margin-top: 15px;
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 1.2rem;
+            color: #a75f1e;
+        }
+
+        /* Адаптация под мобильные */
+        @media (max-width: 700px) {
+            .container {
+                padding: 25px;
+            }
+            .title-block h1 {
+                font-size: 3rem;
+            }
+            .profile {
+                flex-direction: column;
+                align-items: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Шапка с именем и змеиным шармом -->
+        <div class="header">
+            <div class="title-block">
+                <h1>Энтони Дж. Кроули</h1>
+                <div class="subtitle">
+                    <i class="fas fa-ophiuchus"></i>
+                    <span>демон, шотландский плантатор, бывший змей</span>
+                    <i class="fas fa-car"></i>
+                </div>
+            </div>
+            <div class="snake-icon">
+                <i class="fas fa-dragon"></i> <!-- иконка вместо змея, тоже подходит -->
+            </div>
+        </div>
+
+        <!-- Основной блок: портрет и информация -->
+        <div class="profile">
+            <div class="profile-image">
+                <div class="sunglasses-frame" title="За этими очками скрывается куча проблем и змеиные глаза"></div>
+                <div class="snake-coil"></div>
+                <div class="traits">
+                    <div class="trait-item"><i class="fas fa-glasses"></i> Очки <strong>· всегда при нём</strong></div>
+                    <div class="trait-item"><i class="fas fa-wine-glass-alt"></i> Любит <strong>· хорошее вино и плантаторский пунш</strong></div>
+                    <div class="trait-item"><i class="fas fa-snake"></i> Специализация <strong>· искушение + змеиные штучки</strong></div>
+                    <div class="trait-item"><i class="fas fa-music"></i> Саундтрек <strong>· Queen, Best of 80s</strong></div>
+                </div>
+            </div>
+            <div class="profile-bio">
+                <h2>Падший, но не безнадёжный</h2>
+                <p>Кроули (когда-то известный как Змей, искусивший Еву) провёл последние шесть тысяч лет на Земле, выполняя мелкие демонические поручения и постепенно привыкая к смертным удобствам. Он не столько зло, сколько неудобство: любит скоростную езду на своём «Бентли», хорошие очки и чтобы его оставили в покое. Вместе с ангелом Азирафелем пытается спасти мир от Армагеддона просто потому, что им обоим здесь нравится.</p>
+                <p>В отличие от классических демонов, у Кроули есть совесть (хорошо спрятанная) и привязанность к смертным — особенно к Азирафелю, которому он веками привозит подарки и с которым спасает мир за ланчем. Водит так, будто хочет убиться, но благодаря удаче (или помощи свыше) всегда выживает.</p>
+                <div class="quote">
+                    <i class="fas fa-quote-right"></i> Я не хороший человек. И даже не плохой. Я просто... Кроули. И я хочу, чтобы этот чёртов мир существовал, потому что здесь подают отличные устрицы.
+                </div>
+            </div>
+        </div>
+
+        <!-- Детальные карточки с фактами -->
+        <div class="details-grid">
+            <div class="detail-card">
+                <i class="fas fa-car-side"></i>
+                <h3>Бентли 1926</h3>
+                <p>Его любовь, его дом, его убежище. Машина играет Queen, водит сама и не любит святую воду. Имеет привычку гореть, но восстанавливаться.</p>
+            </div>
+            <div class="detail-card">
+                <i class="fas fa-apple-alt"></i>
+                <h3>Эдем · яблоко</h3>
+                <p>Именно он подсунул Еве то самое яблоко. Не потому что хотел зла, а потому что "это была его работа". С тех пор обожает этот фрукт.</p>
+            </div>
+            <div class="detail-card">
+                <i class="fas fa-feather-alt"></i>
+                <h3>Азирафель</h3>
+                <p>Ангел-антагонист и лучший друг. Ради него Кроули готов терпеть святую воду, ланчи в «Ritz» и дурацкие планы спасения человечества.</p>
+            </div>
+            <div class="detail-card">
+                <i class="fas fa-crown"></i>
+                <h3>Князь Ада</h3>
+                <p>Формально герцог Ада, но повышение его не радует. Слишком много бумажной работы и меньше времени на спасение мира от своих же коллег.</p>
+            </div>
+        </div>
+
+        <!-- Нижний блок с атмосферой -->
+        <div class="footer-quotes">
+            <p><i class="fas fa-compact-disc"></i> «Мы не на стороне ангелов или демонов. Мы на своей стороне. И на стороне этого бара.»</p>
+            <div class="signature">
+                <i class="fas fa-hand-spock"></i> — Кроули, профессионал своего дела (уклонение от ответственности)
+            </div>
+            <p style="margin-top: 20px; font-size: 0.9rem; opacity: 0.5;">
+                <i class="fas fa-hourglass-half"></i> Шесть тысяч лет на Земле. Всё ещё не уволен.
+            </p>
+        </div>
+    </div>
+</body>
+</html>
